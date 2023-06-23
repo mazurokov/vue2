@@ -1,0 +1,56 @@
+@charset "utf-8"
+
+@import "../variables/breakpoints"
+
+//mobile
+@mixin mobile
+    @media (max-width: $devicesMedium - 1px)
+        @content
+//
+
+//medium
+@mixin devices_medium
+    @media (min-width: $devicesMedium) and ( max-width: $devicesLarge - 1px) 
+        @content
+
+@mixin devices_medium_min
+    @media (min-width: $devicesMedium)
+        @content
+
+@mixin  devices_medium_max
+    @media (max-width: $devicesLarge - 1px)
+        @content
+//
+
+//large
+@mixin devices_large
+    @media (min-width: $devicesLarge) and ( max-width: $devicesLargeX - 1px) 
+        @content
+
+@mixin devices_large_min
+    @media (min-width: $devicesLarge)
+        @content
+
+@mixin devices_large_max
+    @media (max-width: $devicesLargeX - 1px)
+        @content
+//
+
+//largeX
+@mixin devices_largeX
+    @media (min-width: $devicesLargeX) and ( max-width: $extradevicesLargeX - 1px)
+        @content
+
+@mixin devices_largeX_min
+    @media (min-width: $devicesLargeX)
+        @content
+
+@mixin devices_largeX_max
+    @media (max-width: $devicesLargeXX - 1px)
+        @content
+//
+    
+//devicesLargeXX
+@mixin devices_largeXX_min
+    @media (min-width: $devicesLargeXX)
+        @content
