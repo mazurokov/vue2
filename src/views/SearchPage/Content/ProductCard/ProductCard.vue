@@ -10,8 +10,11 @@
           <div class="description">
             {{ item.description }}
           </div>
-          <div class="price" v-for="(price, i) of item.price" :key="`price-${i}`">
-            {{ price.value }}
+          <div class="price" v-for="price of item.price" :key="price.id">
+            <div>{{ price.value }}</div>
+            <div v-if="price.discount" class="badge-light ss">
+              {{ price.discount }}
+            </div>
           </div>
           <div class="description-extra">
             {{ item.descriptionExtra }}

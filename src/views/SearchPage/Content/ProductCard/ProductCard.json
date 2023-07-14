@@ -1,5 +1,6 @@
 [
     {
+        "id": "0",
         "imgSrc": "./images/Image-0.png",
         "description": "Vintage Typewriter to post awesome stories about UI design and webdev.",
         "price": [
@@ -15,6 +16,7 @@
         ]
     },
     {
+        "id": "1",
         "imgSrc": "./images/Image-1.png",
         "description": "Lee Pucker design. Leather botinki for handsome designers. Free shipping.",
         "price": [
@@ -30,6 +32,7 @@
         ]
     },
     {
+        "id": "2",
         "imgSrc": "./images/Image-2.png",
         "description": "Timesaving kitten to save months on development. Playful, cute, cheap!",
         "price": [
@@ -45,6 +48,7 @@
         ]
     },
     {
+        "id": "3",
         "imgSrc": "./images/Image-3.png",
         "description": "Plastic useless plugs and tubes for high-fidelity prototyping. Fit & Eat!",
         "price": [
@@ -61,6 +65,7 @@
         ]
     },
     {
+        "id": "4",
         "imgSrc": "./images/Image-4.png",
         "description": "Creativity stimulating lotion. Drink every morning to generate better ideas!",
         "price": [
@@ -76,6 +81,7 @@
         ]
     },
     {
+        "id": "5",
         "imgSrc": "./images/Image-5.png",
         "description": "Prototyping items to create a lot if useless things",
         "price": [
@@ -91,6 +97,7 @@
         ]
     },
     {
+        "id": "6",
         "imgSrc": "./images/Image-6.png",
         "description": "John Von Ebalkin SPRING",
         "price": [
@@ -106,6 +113,7 @@
         ]
     },
     {
+        "id": "7",
         "imgSrc": "./images/Image-7.png",
         "description": "Envelope, Stripes, Pencil and etc. Purchase this kit today and feel OKAY",
         "price": [
@@ -121,6 +129,7 @@
         ]
     },
     {
+        "id": "8",
         "imgSrc": "./images/Image-8.png",
         "description": "Professional teadrinking set for every designer and developer",
         "price": [
@@ -136,6 +145,7 @@
         ]
     },
     {
+        "id": "9",
         "imgSrc": "./images/Image-9.png",
         "description": "One string Bonsai description",
         "price": [
@@ -151,6 +161,7 @@
         ]
     },
     {
+        "id": "10",
         "imgSrc": "./images/Image-10.png",
         "description": "Simply best item in town to shine bright with your Nine Inch Nails",
         "price": [
@@ -166,6 +177,7 @@
         ]
     },
     {
+        "id": "11",
         "imgSrc": "./images/Image-11.png",
         "description": "KISTOCHKI & KRASIBO. Top cosmetics brand from Chelyabinsk is here!",
         "price": [
