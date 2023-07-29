@@ -1,7 +1,6 @@
 @charset "utf-8"
 @import "@/assets/sass/core/mixin/mixin"
 
-    
 .cards-wrapper
     display: flex
     flex-wrap: wrap
@@ -21,16 +20,33 @@
         +ellipsis(3)
         color: $aswadBlack
         line-height: 24px
+        +devices_medium_min
+            height: 74px
+
     .price
         +body-sl
+        display: flex
+        flex-wrap: wrap
+        align-items: center
         color: rgba(0, 0, 0, 0.87)
         font-weight: 700
         line-height: 36px
+
+        > *:first-child
+            flex-grow: 1
+
+        [class*="badge-"]
+            +body-sxs
+            +round-ss
 
     .description-extra
         +body-ss
         +ellipsis(2)
         color: $infamous
+        +devices_medium_min
+            display: flex
+            align-items: center
+            height: 40px
 
     .estimation
         display: flex
