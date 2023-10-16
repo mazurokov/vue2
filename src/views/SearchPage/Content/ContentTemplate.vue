@@ -1,7 +1,7 @@
 <template>
     <section class="content">
       <div class="flex_row jc-sb">
-        <div class="flex_row gao-20">
+        <div class="flex_row gap-20">
           <select title="Useless">
             <option value="0">
               Useless first
