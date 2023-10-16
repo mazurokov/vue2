@@ -17,9 +17,9 @@
         class="features"
       >
         <svg 
-                class="icon" 
-                width="48" 
-                height="48"
+          class="icon" 
+          width="48" 
+          height="48"
         >
                 <use :xlink:href="`#i48-${item.svg}`"></use>
           </svg>
