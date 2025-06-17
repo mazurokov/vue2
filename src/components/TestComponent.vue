@@ -32,17 +32,21 @@ export default {
       const file = e.target.files[0];
       if (file) {
 
-
         const reader = new FileReader();
         reader.onload = async ({ target }) => {
           try {
             const meta = await this.extractMeta(target.result);
             this.meta = meta;
             const type = file.name.split('.').pop().toLowerCase()
+            let withoutPlayback = false;
+            if(['hvc1', 'hev1']?.includes(meta.codec) || type !== 'mp4'){
+              withoutPlayback = true;
+            }
             const video = {
               meta,
               file,
               type,
+              withoutPlayback,
             }
             this.videoData.push(video);
 
@@ -66,7 +70,6 @@ export default {
         mp4boxfile.onReady = ({ tracks }) => {
           const vTrack = tracks.find(t => t.video);
           if (vTrack) {
-            console.log('test', vTrack)
             resolve({
               width: vTrack.track_width,
               height: vTrack.track_height,
