@@ -39,7 +39,9 @@ export default {
             this.meta = meta;
             const type = file.name.split('.').pop().toLowerCase()
             let withoutPlayback = false;
-            if(['hvc1', 'hev1']?.includes(meta.codec) || type !== 'mp4'){
+            if(meta.codec?.includes('hvc1')
+              || meta.codec?.includes('hev1')
+              || type !== 'mp4'){
               withoutPlayback = true;
             }
             const video = {
