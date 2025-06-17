@@ -11,6 +11,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "mp4box": "^0.5.4",
     "vue": "^3.3.11",
     "vue-router": "^4.2.5"
   },
