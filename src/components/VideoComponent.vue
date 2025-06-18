@@ -1,26 +1,14 @@
 <template>
   <div>
-    <div style="">
-      <pre v-if="videoError">
-      videoError::: {{videoError}}
-    </pre>
-      <br>
-      <pre v-if="videoErrorMessage">
-      videoErrorMessage::: {{videoErrorMessage}}
-    </pre>
-    </div>
-    <div v-if="data?.withoutPlayback" class="without-playback">
-      Відео недоступне для відтворення
-    </div>
     <video
-      v-else
       ref="videoPlayer"
-      crossorigin
-      playsinline
-      preload="none"
       controls
-    >
-    </video>
+      @loadedmetadata="onLoaded"
+      @error="onVideoError"
+    ></video>
+
+    <div v-if="isLoading">Завантажуємо відео…</div>
+    <div v-if="errorMsg" class="error">{{ errorMsg }}</div>
   </div>
 </template>
 
@@ -30,43 +18,47 @@ export default {
   props: ['data'],
   data() {
     return {
-      meta: null,
-      videoError: null,
-      videoErrorMessage: '',
+      isLoading: true,
+      errorMsg: null,
     };
   },
+
+  methods: {
+    onLoaded() {
+      // відео готове до відтворення
+      this.isLoading = false;
+    },
+    onVideoError(event) {
+      this.isLoading = false;
+
+      // video.error.code: 1–4 відповідно до стандарту HTMLMediaError
+      const code = event.target.error?.code;
+      switch (code) {
+        case 1:
+          this.errorMsg = 'Відмова браузера через політику безпеки.';
+          break;
+        case 2:
+          this.errorMsg = 'Помилка завантаження файлу.';
+          break;
+        case 3:
+          this.errorMsg = 'Пошкоджене медіа або невірний формат.';
+          break;
+        case 4:
+          this.errorMsg = 'Формат не підтримується.';
+          break;
+        default:
+          this.errorMsg = 'Невідома помилка відтворення відео.';
+      }
+    }
+  },
+
   mounted() {
     const video = this.$refs.videoPlayer;
-
-    video.addEventListener('error', () => {
-      const error = video.error;
-      if (error) {
-        this.videoError = {
-          code: error.code,
-          message: error.message,
-        };
-        switch (error.code) {
-          case MediaError.MEDIA_ERR_ABORTED:
-            this.videoErrorMessage = 'Відтворення відео перервано користувачем.';
-            break;
-          case MediaError.MEDIA_ERR_NETWORK:
-            this.videoErrorMessage = 'Помилка мережі під час завантаження відео.';
-            break;
-          case MediaError.MEDIA_ERR_DECODE:
-            this.videoErrorMessage = 'Помилка декодування відео.';
-            break;
-          case MediaError.MEDIA_ERR_SRC_NOT_SUPPORTED:
-            this.videoErrorMessage = 'Формат відео або MIME-тип не підтримується.';
-            break;
-          default:
-            this.videoErrorMessage = 'Невідома помилка відео.';
-            break;
-        }
-      }
-    });
-
-    if (this.data?.file && !this.data?.withoutPlayback) {
-      video.src = URL.createObjectURL(this.data?.file);
+    if (this.data?.file?.name) {
+      video.src = URL.createObjectURL(this.data.file);
+    } else {
+      this.isLoading = false;
+      this.errorMsg = 'Файл не знайдено';
     }
   },
 };
