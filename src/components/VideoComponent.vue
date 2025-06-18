@@ -1,8 +1,8 @@
 <template>
   <div>
     <div style="max-width: 100%; overflow-x: auto">
-      <pre v-if="videoError">
-        videoError::: {{ videoError }}
+      <pre v-if="mediaError">
+        mediaError::: {{ mediaError }}
       </pre>
       <br>
       <pre v-if="videoErrorMessage">
@@ -13,7 +13,6 @@
       Відео недоступне для відтворення
     </div>
     <video
-      v-else
       ref="videoPlayer"
       crossorigin
       playsinline
@@ -31,42 +30,47 @@ export default {
   data() {
     return {
       meta: null,
-      videoError: null,
+      mediaError: null,
       videoErrorMessage: ''
     }
   },
   mounted() {
-    const video = this.$refs.videoPlayer
-
+    const video = this.$refs.videoPlayer;
+    if (this.data?.file && !this.data?.withoutPlayback) {
+      video.src = URL.createObjectURL(this.data.file);
+    }
     video.addEventListener('error', () => {
-      const error = video.error
+      const error = video.error;
       if (error) {
         this.videoError = {
           code: error?.code,
           message: error?.message,
         };
-        console.error('Common error:::', error);
 
         switch (error.code) {
+          case MediaError.MEDIA_ERR_ABORTED:
+            console.error('Відтворення відео перервано користувачем.');
+            break;
+          case MediaError.MEDIA_ERR_NETWORK:
+            console.error('Помилка мережі під час завантаження відео.');
+            break;
           case MediaError.MEDIA_ERR_DECODE:
-            this.videoErrorMessage = 'Помилка декодування відео.'
             console.error('Помилка декодування відео.');
-            break
+            this.mediaError = true;
+            break;
           case MediaError.MEDIA_ERR_SRC_NOT_SUPPORTED:
-            this.videoErrorMessage = 'Формат відео або MIME-тип не підтримується.'
-            console.error('Формат відео або MIME-тип не підтримується.');
-            break
+            console.error('Формат відео або тип не підтримується.');
+            this.mediaError = true;
+            break;
           default:
-            this.videoErrorMessage = 'Невідома помилка відео.'
             console.error('Невідома помилка відео.');
-            break
+            this.mediaError = true;
+            break;
         }
       }
-    })
+    });
 
-    if (this.data?.file && !this.data?.withoutPlayback) {
-      video.src = URL.createObjectURL(this.data?.file)
-    }
+
   }
 }
 </script>
