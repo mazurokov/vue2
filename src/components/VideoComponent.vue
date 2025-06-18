@@ -41,18 +41,13 @@ export default {
     video.addEventListener('error', () => {
       const error = video.error
       if (error) {
-        this.videoError = JSON.stringify(error);
+        this.videoError = {
+          code: error?.code,
+          message: error?.message,
+        };
         console.error('Common error:::', error);
 
         switch (error.code) {
-          case MediaError.MEDIA_ERR_ABORTED:
-            this.videoErrorMessage = 'Відтворення відео перервано користувачем.'
-            console.error('Відтворення відео перервано користувачем.');
-            break
-          case MediaError.MEDIA_ERR_NETWORK:
-            this.videoErrorMessage = 'Помилка мережі під час завантаження відео.'
-            console.error('Помилка мережі під час завантаження відео.');
-            break
           case MediaError.MEDIA_ERR_DECODE:
             this.videoErrorMessage = 'Помилка декодування відео.'
             console.error('Помилка декодування відео.');
