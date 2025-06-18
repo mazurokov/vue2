@@ -1,5 +1,14 @@
 <template>
   <div>
+    <div style="">
+      <pre v-if="videoError">
+      videoError::: {{videoError}}
+    </pre>
+      <br>
+      <pre v-if="videoErrorMessage">
+      videoErrorMessage::: {{videoErrorMessage}}
+    </pre>
+    </div>
     <div v-if="data?.withoutPlayback" class="without-playback">
       Відео недоступне для відтворення
     </div>
@@ -22,31 +31,35 @@ export default {
   data() {
     return {
       meta: null,
+      videoError: null,
+      videoErrorMessage: '',
     };
   },
   mounted() {
     const video = this.$refs.videoPlayer;
 
-    video.addEventListener('error', (event) => {
+    video.addEventListener('error', () => {
       const error = video.error;
       if (error) {
-        console.error('Video error code:', error.code);
-
+        this.videoError = {
+          code: error.code,
+          message: error.message,
+        };
         switch (error.code) {
           case MediaError.MEDIA_ERR_ABORTED:
-            console.error('Відтворення відео перервано користувачем.');
+            this.videoErrorMessage = 'Відтворення відео перервано користувачем.';
             break;
           case MediaError.MEDIA_ERR_NETWORK:
-            console.error('Помилка мережі під час завантаження відео.');
+            this.videoErrorMessage = 'Помилка мережі під час завантаження відео.';
             break;
           case MediaError.MEDIA_ERR_DECODE:
-            console.error('Помилка декодування відео.');
+            this.videoErrorMessage = 'Помилка декодування відео.';
             break;
           case MediaError.MEDIA_ERR_SRC_NOT_SUPPORTED:
-            console.error('Формат відео або MIME-тип не підтримується.');
+            this.videoErrorMessage = 'Формат відео або MIME-тип не підтримується.';
             break;
           default:
-            console.error('Невідома помилка відео.');
+            this.videoErrorMessage = 'Невідома помилка відео.';
             break;
         }
       }
