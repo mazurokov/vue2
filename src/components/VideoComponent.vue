@@ -1,5 +1,14 @@
 <template>
   <div>
+    <div style="max-width: 100%; overflow-x: auto">
+      <pre v-if="videoError">
+        videoError::: {{ videoError }}
+      </pre>
+      <br>
+      <pre v-if="videoErrorMessage">
+        videoErrorMessage::: {{ videoErrorMessage }}
+      </pre>
+    </div>
     <div v-if="data?.withoutPlayback" class="without-playback">
       Відео недоступне для відтворення
     </div>
@@ -22,39 +31,40 @@ export default {
   data() {
     return {
       meta: null,
-    };
-  },
-  mounted() {
-    const video = this.$refs.videoPlayer;
-
-    video.addEventListener('error', (event) => {
-      const error = video.error;
-      if (error) {
-        console.error('Video error code:', error.code);
-
-        switch (error.code) {
-          case MediaError.MEDIA_ERR_ABORTED:
-            console.error('Відтворення відео перервано користувачем.');
-            break;
-          case MediaError.MEDIA_ERR_NETWORK:
-            console.error('Помилка мережі під час завантаження відео.');
-            break;
-          case MediaError.MEDIA_ERR_DECODE:
-            console.error('Помилка декодування відео.');
-            break;
-          case MediaError.MEDIA_ERR_SRC_NOT_SUPPORTED:
-            console.error('Формат відео або MIME-тип не підтримується.');
-            break;
-          default:
-            console.error('Невідома помилка відео.');
-            break;
-        }
-      }
-    });
-
-    if (this.data?.file && !this.data?.withoutPlayback) {
-      video.src = URL.createObjectURL(this.data?.file);
+      videoError: null,
+      videoErrorMessage: ''
     }
   },
-};
+  mounted() {
+    const video = this.$refs.videoPlayer
+
+    video.addEventListener('error', () => {
+      const error = video.error
+      if (error) {
+        this.videoError = error
+        switch (error.code) {
+          case MediaError.MEDIA_ERR_ABORTED:
+            this.videoErrorMessage = 'Відтворення відео перервано користувачем.'
+            break
+          case MediaError.MEDIA_ERR_NETWORK:
+            this.videoErrorMessage = 'Помилка мережі під час завантаження відео.'
+            break
+          case MediaError.MEDIA_ERR_DECODE:
+            this.videoErrorMessage = 'Помилка декодування відео.'
+            break
+          case MediaError.MEDIA_ERR_SRC_NOT_SUPPORTED:
+            this.videoErrorMessage = 'Формат відео або MIME-тип не підтримується.'
+            break
+          default:
+            this.videoErrorMessage = 'Невідома помилка відео.'
+            break
+        }
+      }
+    })
+
+    if (this.data?.file && !this.data?.withoutPlayback) {
+      video.src = URL.createObjectURL(this.data?.file)
+    }
+  }
+}
 </script>
