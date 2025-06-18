@@ -41,7 +41,7 @@ export default {
     video.addEventListener('error', () => {
       const error = video.error
       if (error) {
-        this.videoError = error
+        this.videoError = JSON.stringify(error);
         switch (error.code) {
           case MediaError.MEDIA_ERR_ABORTED:
             this.videoErrorMessage = 'Відтворення відео перервано користувачем.'
